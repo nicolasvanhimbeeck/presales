@@ -1,7 +1,9 @@
-# flexso-presales-mockups
+# presales
 
-Static presales mockups, one folder per client under `public/`, served via GitLab Pages
-and gated by Cloudflare Access (see `.claude/plan.md` for the full design).
+Static presales mockups, one folder per client under `public/`, served via GitHub Pages
+and gated by Cloudflare Access (see [GITHUB-CLOUDFLARE-SETUP.md](GITHUB-CLOUDFLARE-SETUP.md) for the full setup).
+
+Live at [presales.hambsa.eu](https://presales.hambsa.eu/).
 
 ## Adding a new client mockup
 

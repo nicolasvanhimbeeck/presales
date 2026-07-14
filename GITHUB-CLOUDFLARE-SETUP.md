@@ -149,6 +149,15 @@ Just share the URL directly (chat, email body, whatever) — since there's no at
 
 ---
 
+## Troubleshooting
+
+- **Nothing deploys after a settings change**: the Actions workflow only triggers on a `push` to `main` — changing something in the GitHub UI (e.g. Settings → Pages) does **not** by itself trigger a new deployment. Push any commit (even a docs change) to kick off a fresh run, or use **Actions → Deploy Pages → Run workflow** if you've enabled manual dispatch.
+- **Source silently reset to "Deploy from a branch"**: entering a custom domain under Settings → Pages can auto-create a root-level `CNAME` file and reset **Build and deployment → Source** back to the legacy branch-based mode. Check `gh api repos/<owner>/<repo>/pages` — `"build_type"` should say `"workflow"`, not `"legacy"`. If it says `legacy`, re-select **GitHub Actions** as the source.
+- **Duplicate `CNAME` files**: the repo only needs `public/CNAME` (the one actually published by the Actions workflow). A root-level `CNAME` file may get auto-created by the GitHub UI when you set the custom domain — it's unused by the Actions build and safe to delete, but harmless to leave.
+- **Cloudflare error 1016 (Origin DNS error)**: means Cloudflare couldn't resolve the CNAME target's DNS, not a GitHub Pages problem. Double-check the DNS record is actually **saved** and the target has no typos/protocol prefix.
+
+---
+
 ## Notes / things to double check
 
 - **Domain ownership**: you need control over a domain/subdomain's DNS to point it at Cloudflare — `hambsa.eu` is already in your own Cloudflare account, so no delegation needed.
