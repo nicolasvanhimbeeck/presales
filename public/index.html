@@ -1,10 +1,109 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Flexso Presales Mockups</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card-bg: #ffffff;
+      --border: #e3e6ee;
+      --text: #1c1f2a;
+      --muted: #6b7280;
+      --accent: #4f46e5;
+      --badge-bg: #eef0ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 4rem 1.5rem;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    h1 { font-size: 1.75rem; margin: 0 0 .25rem; }
+    .sub { color: var(--muted); margin: 0 0 2.5rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: transform .15s ease, box-shadow .15s ease;
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(20, 20, 43, 0.08);
+    }
+    .card h2 { margin: 0; font-size: 1.05rem; }
+    .path {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+    .badges { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .25rem; }
+    .badge {
+      font-size: .72rem;
+      font-weight: 600;
+      padding: .25rem .55rem;
+      border-radius: 999px;
+      background: var(--badge-bg);
+      color: var(--accent);
+      letter-spacing: .01em;
+    }
+    footer { margin-top: 3rem; color: var(--muted); font-size: .8rem; }
+  </style>
 </head>
 <body>
-  <p>Nothing to see here.</p>
+  <div class="wrap">
+    <h1>Flexso Presales Mockups</h1>
+    <p class="sub">Overzicht van de actieve trajecten en wie er toegang toe heeft.</p>
+    <div class="grid">
+      <a class="card" href="credendo-p2p/">
+        <h2>Credendo — P2P</h2>
+        <span class="path">/credendo-p2p/</span>
+        <div class="badges">
+          <span class="badge">@flexso.com</span>
+          <span class="badge">@gmail.com</span>
+        </div>
+      </a>
+      <a class="card" href="digipolis-btp/">
+        <h2>Digipolis — BTP</h2>
+        <span class="path">/digipolis-btp/</span>
+        <div class="badges">
+          <span class="badge">@flexso.com</span>
+          <span class="badge">@gmail.com</span>
+        </div>
+      </a>
+      <a class="card" href="agvespa/">
+        <h2>AG Vespa</h2>
+        <span class="path">/agvespa/</span>
+        <div class="badges">
+          <span class="badge">@flexso.com</span>
+          <span class="badge">@cronos.be</span>
+        </div>
+      </a>
+      <a class="card" href="lhoist/">
+        <h2>Lhoist</h2>
+        <span class="path">/lhoist/</span>
+        <div class="badges">
+          <span class="badge">@flexso.com</span>
+          <span class="badge">@cronos.be</span>
+        </div>
+      </a>
+    </div>
+    <footer>Toegang wordt afgedwongen via Cloudflare Access — deze pagina zelf is enkel een overzicht.</footer>
+  </div>
 </body>
 </html>

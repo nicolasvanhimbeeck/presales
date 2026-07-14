@@ -25,8 +25,12 @@ presales/
 │   │   └── index.html
 │   ├── digipolis-btp/
 │   │   └── index.html
-│   ├── CNAME                (contains just: mockups.flexso.be — only add this once you reach Part 3)
-│   └── index.html           (optional landing page, or leave empty/404)
+│   ├── agvespa/
+│   │   └── index.html
+│   ├── lhoist/
+│   │   └── index.html
+│   ├── CNAME                (contains just: presales.hambsa.eu — only add this once you reach Part 3)
+│   └── index.html           (overview page listing every track + which email domains can access it)
 └── README.md
 ```
 
@@ -38,7 +42,7 @@ https://nicolasvanhimbeeck.github.io/presales/digipolis-btp/
 ```
 
 Once the custom domain is attached (Part 3), the client-facing URL becomes
-`https://mockups.flexso.be/credendo-p2p/` instead.
+`https://presales.hambsa.eu/credendo-p2p/` instead.
 
 ### `.github/workflows/pages.yml`
 
@@ -103,21 +107,30 @@ Cloudflare Access sits between the visitor and GitHub Pages, checking identity (
 
 ### 3.1 Add the domain to Cloudflare
 
-1. Add the domain you'll use for mockups (e.g. `mockups.flexso.be`) to your Cloudflare account, if not already added
-2. DNS record: **CNAME** `mockups` → `<username>.github.io` — **Proxied (orange cloud)**, required so Cloudflare Access can intercept requests
-3. In the repo, add a `CNAME` file inside `public/` containing exactly `mockups.flexso.be` (no protocol, no trailing slash) — GitHub Pages needs this to know which custom domain to serve
-4. In GitHub → repo **Settings → Pages → Custom domain**, enter `mockups.flexso.be` and save (GitHub will check DNS; it may show "not secure" briefly — safe to ignore since Cloudflare terminates TLS for visitors anyway)
+1. Add the domain you'll use for mockups (e.g. `presales.hambsa.eu`) to your Cloudflare account, if not already added
+2. DNS record: **CNAME** `presales` → `nicolasvanhimbeeck.github.io` — **Proxied (orange cloud)**, required so Cloudflare Access can intercept requests
+3. In the repo, add a `CNAME` file inside `public/` containing exactly `presales.hambsa.eu` (no protocol, no trailing slash) — GitHub Pages needs this to know which custom domain to serve
+4. In GitHub → repo **Settings → Pages → Custom domain**, enter `presales.hambsa.eu` and save (GitHub will check DNS; it may show "not secure" briefly — safe to ignore since Cloudflare terminates TLS for visitors anyway)
 5. Optional but recommended: verify domain ownership under your **GitHub account → Settings → Pages → Verified domains**, so no one else on GitHub can claim the same custom domain
 
 ### 3.2 Set up Cloudflare Access
 
 1. Cloudflare dashboard → **Zero Trust → Access → Applications**
 2. **Add an application** → type: *Self-hosted*
-3. Application domain: `mockups.flexso.be/credendo-p2p` (path-based — repeat per client)
-4. Under **Policies**, create a rule:
-   - Action: Allow
-   - Include: **Emails ending in** `@credendo.com` (or specific email addresses if you prefer)
-5. Repeat step 3–4 for each client path (e.g. a second Application for `/digipolis-btp`, restricted to the Digipolis/AG Vespa contacts)
+3. Application domain: `presales.hambsa.eu/<path>` (path-based — one Application per folder)
+4. Under **Policies**, create an **Allow** rule with **Emails ending in** for the allowed domain(s) below
+5. Repeat for each path
+
+| Folder | Application domain | Allowed email domains |
+|---|---|---|
+| `credendo-p2p` | `presales.hambsa.eu/credendo-p2p` | `@flexso.com`, `@gmail.com` |
+| `digipolis-btp` | `presales.hambsa.eu/digipolis-btp` | `@flexso.com`, `@gmail.com` |
+| `agvespa` | `presales.hambsa.eu/agvespa` | `@flexso.com`, `@cronos.be` |
+| `lhoist` | `presales.hambsa.eu/lhoist` | `@flexso.com`, `@cronos.be` |
+
+Each Application needs one policy with all its allowed domains listed as separate **Include → Emails ending in** rules (OR'd together, not AND'd) — e.g. the `agvespa` policy includes both `@flexso.com` and `@cronos.be` as separate include rules under the same Allow policy.
+
+Also make sure **One-time PIN** is enabled as a login method (Zero Trust → Integrations → Identity providers → Add new → One-time PIN) so clients can authenticate with just their email, without a Cloudflare account — see [docs](https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/one-time-pin/).
 
 ### 3.3 What the client experience looks like
 
@@ -138,7 +151,7 @@ Just share the URL directly (chat, email body, whatever) — since there's no at
 
 ## Notes / things to double check
 
-- **Domain ownership**: you need control over a domain/subdomain's DNS to point it at Cloudflare. Check with whoever manages `flexso.be` DNS if `mockups.flexso.be` (or similar) is available to delegate.
+- **Domain ownership**: you need control over a domain/subdomain's DNS to point it at Cloudflare — `hambsa.eu` is already in your own Cloudflare account, so no delegation needed.
 - **Free tier limits**: Cloudflare Access free tier supports up to 50 users — almost certainly enough for presales use. Zero Trust Free requires a card on file for verification (no charge expected at this scale).
 - **Revoking access**: removing a client's email from the Application policy immediately cuts off access — useful once a deal closes or falls through.
 - **Multiple mockups per client**: just add more subfolders under the same client path; the Cloudflare Application rule covers the whole path prefix.
